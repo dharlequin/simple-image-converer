@@ -1,4 +1,14 @@
-# Convert BMP to PNG with original modifcation date
+# Tony's Image converter
+
+## 1.1.0
+
+### Additionaly converts HEIC to JPEG
+
+User can now select between BMP and HEIC as a source format. It doesn't preserve image orientation for now.
+
+## 1.0.0
+
+### Convert BMP to PNG with original modifcation date
 
 I needed a simple enough BMP to PNG converter, and while there are a bunch of those, even free, on the web, I really needed to preserve the original modification date of the files.
 
