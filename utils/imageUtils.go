@@ -4,6 +4,7 @@ import (
 	"image"
 	"image/jpeg"
 	"image/png"
+	"log"
 	"os"
 
 	"github.com/jdeng/goheif"
@@ -25,7 +26,7 @@ func DecodeImage(srcFile *os.File, srcFormat string) image.Image {
 		HandleError(err)
 		return img
 	default:
-		ThrowFatal()
+		log.Fatalln("Incorrect value received")
 	}
 
 	return nil
@@ -40,6 +41,6 @@ func EncodeImage(file *os.File, image image.Image, srcFormat string) {
 		err := jpeg.Encode(file, image, nil)
 		HandleError(err)
 	default:
-		ThrowFatal()
+		log.Fatalln("Incorrect value received")
 	}
 }

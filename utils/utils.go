@@ -1,8 +1,25 @@
 package utils
 
-import "strings"
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+	"strings"
+)
 
-func NormalizeFolderName(name string) string {
+func GetFolderName(instruction string) string {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Println(instruction)
+	scanner.Scan()
+	directory := scanner.Text()
+
+	validateFolderName(directory)
+	return normalizeFolderName(directory)
+}
+
+func normalizeFolderName(name string) string {
 	if !strings.HasSuffix(name, "/") {
 		name += "/"
 	}
@@ -10,14 +27,32 @@ func NormalizeFolderName(name string) string {
 	return name
 }
 
-func AssignFormat(format string) string {
+func validateFolderName(name string) {
+	if name == "" {
+		log.Fatalln("Value cannot be empty")
+	}
+}
+
+func GetSourceFormat() string {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	fmt.Println("Choose source format:")
+	fmt.Println("1 - BMP")
+	fmt.Println("2 - HEIC")
+	scanner.Scan()
+	srcFormat := scanner.Text()
+
+	return assignFormat(srcFormat)
+}
+
+func assignFormat(format string) string {
 	switch format {
 	case "1":
 		return BMP
 	case "2":
 		return HEIC
 	default:
-		ThrowFatal()
+		log.Fatalln("Incorrect value received")
 	}
 
 	return ""
@@ -30,7 +65,7 @@ func SetNewFileName(name string, format string) string {
 	case HEIC:
 		return strings.Replace(name, format, "jpeg", -1)
 	default:
-		ThrowFatal()
+		log.Fatalln("Incorrect value received")
 	}
 
 	return ""

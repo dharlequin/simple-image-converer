@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -16,30 +15,15 @@ func main() {
 
 	var srcFormat string
 
-	fmt.Println("Enter source directory")
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	srcDir = scanner.Text()
+	srcDir = utils.GetFolderName("Enter source directory")
+	convDir = utils.GetFolderName("Enter convert destination directory")
 
-	fmt.Println("Enter convert destination directory")
-	scanner.Scan()
-	convDir = scanner.Text()
-
-	srcDir = utils.NormalizeFolderName(srcDir)
-	convDir = utils.NormalizeFolderName(convDir)
-
-	fmt.Println("Choose source format:")
-	fmt.Println("1 - BMP")
-	fmt.Println("2 - HEIC")
-	scanner.Scan()
-	srcFormat = scanner.Text()
-
-	srcFormat = utils.AssignFormat(srcFormat)
+	srcFormat = utils.GetSourceFormat()
 
 	files, err := ioutil.ReadDir(srcDir)
 	utils.HandleError(err)
 
-	fmt.Printf("Found %d files\n", len(files))
+	fmt.Printf("Found %d total files\n", len(files))
 
 	var counter = 0
 
