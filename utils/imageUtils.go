@@ -13,16 +13,20 @@ import (
 
 const BMP = "bmp"
 const HEIC = "HEIC"
+const PNG = "png"
 
 func DecodeImage(srcFile *os.File, srcFormat string) image.Image {
 	switch srcFormat {
 	case BMP:
 		img, err := bmp.Decode(srcFile)
 		HandleError(err)
-
 		return img
 	case HEIC:
 		img, err := goheif.Decode(srcFile)
+		HandleError(err)
+		return img
+	case PNG:
+		img, err := png.Decode(srcFile)
 		HandleError(err)
 		return img
 	default:
@@ -37,7 +41,7 @@ func EncodeImage(file *os.File, image image.Image, srcFormat string) {
 	case BMP:
 		err := png.Encode(file, image)
 		HandleError(err)
-	case HEIC:
+	case HEIC, PNG:
 		err := jpeg.Encode(file, image, nil)
 		HandleError(err)
 	default:

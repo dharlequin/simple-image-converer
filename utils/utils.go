@@ -36,9 +36,10 @@ func validateFolderName(name string) {
 func GetSourceFormat() string {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	fmt.Println("Choose source format:")
-	fmt.Println("1 - BMP")
-	fmt.Println("2 - HEIC")
+	fmt.Println("Choose source format by entering corresponding number:")
+	fmt.Println("1 - BMP to PNG")
+	fmt.Println("2 - HEIC to JPEG")
+	fmt.Println("3 - PNG to JPG")
 	scanner.Scan()
 	srcFormat := scanner.Text()
 
@@ -51,6 +52,8 @@ func assignFormat(format string) string {
 		return BMP
 	case "2":
 		return HEIC
+	case "3":
+		return PNG
 	default:
 		log.Fatalln("Incorrect value received")
 	}
@@ -62,8 +65,8 @@ func SetNewFileName(name string, format string) string {
 	switch format {
 	case BMP:
 		return strings.Replace(name, format, "png", -1)
-	case HEIC:
-		return strings.Replace(name, format, "jpeg", -1)
+	case HEIC, PNG:
+		return strings.Replace(name, format, "jpg", -1)
 	default:
 		log.Fatalln("Incorrect value received")
 	}
